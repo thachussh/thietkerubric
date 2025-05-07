@@ -811,13 +811,13 @@
       // Cập nhật điểm thực tế
       const updateCriterionScore = (index, value) => {
         const newScores = [...criterionScores];
-        newScores[index] = value;
+        newScores[index] = value === "" ? "" : parseFloat(value);
         setCriterionScores(newScores);
       };
 
       const updateLevelScore = (index, value) => {
         const newScores = [...levelScores];
-        newScores[index] = value;
+        newScores[index] = value === "" ? "" : parseFloat(value);
         setLevelScores(newScores);
       };
 
@@ -862,7 +862,7 @@
       const totalScore = criteria.reduce((sum, criterion, index) => {
         const score = parseFloat(criterionScores[index]) || 0;
         return sum + (score * criterion.weight) / 100;
-      }, 0);
+      }, 0).toFixed(1);
 
       // Xuất Word
       const exportToWord = () => {
@@ -914,13 +914,13 @@
                         <tr class="scores-row">
                           <td></td>
                           <td></td>
-                          ${criterion.scores.map(score => `<td>${score} điểm</td>`).join('')}
+                          ${criterion.scores.map(score => `<td>${score.toFixed(1)} điểm</td>`).join('')}
                           <td></td>
                         </tr>
                       `).join('')}
                       <tr class="total-row">
                         <td colspan="${levels.length + 2}">Tổng điểm (Tính bằng: SUM(Điểm x Trọng số / 100))</td>
-                        <td>${totalScore || ""}</td>
+                        <td>${totalScore}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -962,9 +962,9 @@
                         ${levels.map((level, levelIdx) => `
                           <tr>
                             <td>${level}</td>
-                            <td>${criterion.scores && criterion.scores[levelIdx] !== undefined ? criterion.scores[levelIdx] : (levels.length - levelIdx - 1)}</td>
+                            <td>${criterion.scores && criterion.scores[levelIdx] !== undefined ? criterion.scores[levelIdx].toFixed(1) : (levels.length - levelIdx - 1)}</td>
                             <td>${criterion.descriptions[levelIdx] || "-"}</td>
-                            <td>${criterionIdx === 0 ? (levelScores[levelIdx] || "") : ""}</td>
+                            <td>${criterionIdx === 0 ? (levelScores[levelIdx] ? levelScores[levelIdx].toFixed(1) : "") : ""}</td>
                           </tr>
                         `).join('')}
                       </tbody>
@@ -1173,6 +1173,7 @@
                           <td className="border p-2">
                             <input
                               type="number"
+                              step="0.1"
                               value={criterion.scores ? criterion.scores[levelIdx] : (levels.length - levelIdx - 1)}
                               onChange={(e) => updateScore(criterionIdx, levelIdx, e.target.value)}
                               className="w-full text-center"
@@ -1191,6 +1192,7 @@
                             {criterionIdx === 0 && (
                               <input
                                 type="number"
+                                step="0.1"
                                 value={levelScores[levelIdx]}
                                 onChange={(e) => updateLevelScore(levelIdx, e.target.value)}
                                 className="w-full text-center"
@@ -1276,6 +1278,7 @@
                         <td className="border p-2">
                           <input
                             type="number"
+                            step="0.1"
                             value={criterionScores[criterionIndex]}
                             onChange={(e) => updateCriterionScore(criterionIndex, e.target.value)}
                             className="w-full text-center"
@@ -1291,6 +1294,7 @@
                           <td key={levelIndex} className="border p-2 italic">
                             <input
                               type="number"
+                              step="0.1"
                               value={score}
                               onChange={(e) => updateScore(criterionIndex, levelIndex, e.target.value)}
                               className="w-full text-center"
@@ -1304,7 +1308,7 @@
                   ))}
                   <tr className="font-bold">
                     <td colSpan={levels.length + 2} className="border p-2 text-right">Tổng điểm:</td>
-                    <td className="border p-2">{totalScore || ""}</td>
+                    <td className="border p-2">{totalScore}</td>
                   </tr>
                 </tbody>
               </table>
