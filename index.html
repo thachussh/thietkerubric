@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Công cụ Tạo Rubric-HCM USSH</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <!-- React CDN -->
   <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
@@ -15,6 +13,90 @@
   <script src="https://unpkg.com/html-docx-js@0.3.1/dist/html-docx.js"></script>
   <!-- FileSaver for saving files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <style>
+    /* Tailwind CSS output (generated from build process) */
+    *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb;}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";}
+    body{margin:0;line-height:inherit;}
+    input,textarea,select{font-family:inherit;font-size:100%;line-height:1.15;margin:0;}
+    textarea{resize:none;}
+    table{border-collapse:collapse;}
+    .container{width:100%;margin-right:auto;margin-left:auto;padding-right:1rem;padding-left:1rem;}
+    @media (min-width: 640px){.container{max-width:640px;}}
+    @media (min-width: 768px){.container{max-width:768px;}}
+    @media (min-width: 1024px){.container{max-width:1024px;}}
+    @media (min-width: 1280px){.container{max-width:1280px;}}
+    .mx-auto{margin-left:auto;margin-right:auto;}
+    .mt-1{margin-top:0.25rem;}
+    .mt-2{margin-top:0.5rem;}
+    .mt-4{margin-top:1rem;}
+    .mb-2{margin-bottom:0.5rem;}
+    .mb-4{margin-bottom:1rem;}
+    .mb-6{margin-bottom:1.5rem;}
+    .mr-2{margin-right:0.5rem;}
+    .block{display:block;}
+    .flex{display:flex;}
+    .grid{display:grid;}
+    .w-full{width:100%;}
+    .w-1\/2{width:50%;}
+    .max-w-5xl{max-width:1280px;}
+    .flex-wrap{flex-wrap:wrap;}
+    .items-center{align-items:center;}
+    .gap-2{gap:0.5rem;}
+    .gap-4{gap:1rem;}
+    .space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * calc(1 - var(--tw-space-x-reverse)));margin-left:calc(1rem * var(--tw-space-x-reverse));}
+    .overflow-x-auto{overflow-x:auto;}
+    .italic{font-style:italic;}
+    .rounded{border-radius:0.25rem;}
+    .rounded-md{border-radius:0.375rem;}
+    .border{border-width:1px;}
+    .border-collapse{border-collapse:collapse;}
+    .border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity));}
+    .border-red-500{--tw-border-opacity:1;border-color:rgb(239 68 68 / var(--tw-border-opacity));}
+    .bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity));}
+    .bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity));}
+    .bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity));}
+    .bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity));}
+    .bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity));}
+    .bg-green-200{--tw-bg-opacity:1;background-color:rgb(187 247 208 / var(--tw-bg-opacity));}
+    .bg-green-300{--tw-bg-opacity:1;background-color:rgb(134 239 172 / var(--tw-bg-opacity));}
+    .bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254 / var(--tw-bg-opacity));}
+    .bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253 / var(--tw-bg-opacity));}
+    .bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity));}
+    .bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity));}
+    .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity));}
+    .bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8 / var(--tw-bg-opacity));}
+    .bg-yellow-600{--tw-bg-opacity:1;background-color:rgb(202 138 4 / var(--tw-bg-opacity));}
+    .p-2{padding:0.5rem;}
+    .p-4{padding:1rem;}
+    .p-6{padding:1.5rem;}
+    .px-3{padding-left:0.75rem;padding-right:0.75rem;}
+    .px-4{padding-left:1rem;padding-right:1rem;}
+    .py-1{padding-top:0.25rem;padding-bottom:0.25rem;}
+    .py-2{padding-top:0.5rem;padding-bottom:0.5rem;}
+    .text-center{text-align:center;}
+    .text-right{text-align:right;}
+    .text-sm{font-size:0.875rem;line-height:1.25rem;}
+    .text-2xl{font-size:1.5rem;line-height:2rem;}
+    .font-bold{font-weight:700;}
+    .font-medium{font-weight:500;}
+    .text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity));}
+    .text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity));}
+    .text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity));}
+    .shadow-md{box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);}
+    .resize-none{resize:none;}
+    .h-20{height:5rem;}
+    .hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity));}
+    .hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity));}
+    .hover\:bg-gray-300:hover{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity));}
+    .hover\:bg-green-300:hover{--tw-bg-opacity:1;background-color:rgb(134 239 172 / var(--tw-bg-opacity));}
+    .hover\:bg-blue-300:hover{--tw-bg-opacity:1;background-color:rgb(147 197 253 / var(--tw-bg-opacity));}
+    .hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity));}
+    .hover\:bg-yellow-600:hover{--tw-bg-opacity:1;background-color:rgb(202 138 4 / var(--tw-bg-opacity));}
+    @media (min-width: 768px){
+      .md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr));}
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
   <div id="root" className="container mx-auto p-4"></div>
@@ -564,7 +646,7 @@
       const [levelScores, setLevelScores] = useState([]); // Điểm thực tế cho từng mức (định tính)
 
       // Load saved rubrics from LocalStorage
-      useEffect | () => {
+      useEffect(() => {
         const storedRubrics = JSON.parse(localStorage.getItem("savedRubrics")) || [];
         setSavedRubrics(storedRubrics);
       }, []);
