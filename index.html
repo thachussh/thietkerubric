@@ -909,15 +909,16 @@
       const totalWeight = criteria.reduce((sum, criterion) => sum + (criterion.weight || 0), 0);
       const isWeightValid = rubricType !== "holistic" ? totalWeight === 100 : true;
 
-      // Tính tổng điểm (cho định lượng)
-      const maxStandardScore = Math.max(...criteria.map(c => Math.max(...c.scores))); // Điểm thang chuẩn (ví dụ: 4)
-      const totalScore = criteria.reduce((sum, criterion, index) => {
+      // Tính tổng điểm (cho định lượng) - Thang 10
+      const maxStandardScore = 10; // Thang điểm chuẩn là 10
+      const totalScoreRaw = criteria.reduce((sum, criterion, index) => {
         const score = parseFloat(criterionScores[index]) || 0;
         const maxScore = Math.max(...criterion.scores); // Điểm tối đa của tiêu chí
         if (maxScore === 0) return sum; // Tránh chia cho 0
         const normalizedScore = (score / maxScore) * (criterion.weight / 100) * maxStandardScore;
         return sum + normalizedScore;
-      }, 0).toFixed(1);
+      }, 0);
+      const totalScore = Math.min(totalScoreRaw, maxStandardScore).toFixed(1);
 
       // Xuất Word
       const exportToWord = () => {
@@ -975,12 +976,12 @@
                         </tr>
                       `).join('')}
                       <tr class="total-row">
-                        <td colspan="${levels.length + 2}">Tổng điểm (Tính bằng: SUM((Điểm thực tế / Điểm tối đa) x (Trọng số / 100) x Điểm thang chuẩn))</td>
+                        <td colspan="${levels.length + 2}">Tổng điểm (Tính bằng: SUM((Điểm thực tế / Điểm tối đa) x (Trọng số / 100) x 10), tối đa 10)</td>
                         <td>${totalScore}</td>
                       </tr>
                     </tbody>
                   </table>
-                  <p>Lưu ý: Để tính tổng điểm, nhập điểm thực tế cho từng tiêu chí. Công thức: Tổng điểm = SUM((Điểm thực tế / Điểm tối đa) x (Trọng số / 100) x ${maxStandardScore}).</p>
+                  <p>Lưu ý: Để tính tổng điểm, nhập điểm thực tế cho từng tiêu chí. Công thức: Tổng điểm = SUM((Điểm thực tế / Điểm tối đa) x (Trọng số / 100) x 10), tối đa 10 điểm.</p>
                 </body>
               </html>
             `;
