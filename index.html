@@ -564,7 +564,7 @@
       const [levelScores, setLevelScores] = useState([]); // Điểm thực tế cho từng mức (định tính)
 
       // Load saved rubrics from LocalStorage
-      useEffect(() => {
+      useEffect | () => {
         const storedRubrics = JSON.parse(localStorage.getItem("savedRubrics")) || [];
         setSavedRubrics(storedRubrics);
       }, []);
@@ -774,7 +774,7 @@
 
       // Kiểm tra tổng trọng số (cho định lượng)
       const totalWeight = criteria.reduce((sum, criterion) => sum + (criterion.weight || 0), 0);
-      const isWeightValid = rubricType === "analytic" ? totalWeight === 100 : true;
+      const isWeightValid = rubricType !== "holistic" ? totalWeight === 100 : true;
 
       // Tính tổng điểm (cho định lượng)
       const totalScore = criteria.reduce((sum, criterion, index) => {
@@ -784,15 +784,15 @@
 
       // Xuất Word
       const exportToWord = () => {
-        if (rubricType === "analytic" && !isWeightValid) {
+        if (rubricType !== "holistic" && !isWeightValid) {
           alert("Tổng trọng số phải bằng 100%!");
           return;
         }
 
         try {
           let htmlContent;
-          if (rubricType === "analytic") {
-            // Rubric định lượng
+          // Rubric định lượng (analytic hoặc C1-C12)
+          if (rubricType !== "holistic") {
             htmlContent = `
               <html>
                 <head>
@@ -1131,7 +1131,7 @@
                     <th className="border p-2">Tiêu chí</th>
                     <th className="border p-2">Trọng số (%)</th>
                     {levels.map((level, index) => (
-                      <th key={index} className="blood p-2">
+                      <th key={index} className="border p-2">
                         <input
                           type="text"
                           value={level}
@@ -1230,7 +1230,7 @@
           </div>
 
           {/* Hiển thị tổng trọng số (cho định lượng) */}
-          {rubricType === "analytic" && (
+          {rubricType !== "holistic" && (
             <div className="mt-2">
               <p className={`text-sm ${isWeightValid ? "text-green-500" : "text-red-500"}`}>
                 Tổng trọng số: {totalWeight}% {isWeightValid ? "(Hợp lệ)" : "(Phải bằng 100%)"}
